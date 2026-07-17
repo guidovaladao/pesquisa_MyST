@@ -4,18 +4,33 @@ on:
     branches:
       - main
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 jobs:
   deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup MyST
-        uses: mystmd/actions/setup@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install MyST MD
+        run: npm install -g mystmd
       - name: Build Site
         run: myst build --site
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_build/site'
       - name: Deploy to GitHub Pages
-        uses: mystmd/actions/deploy@v2
+        id: deployment
+        uses: actions/deploy-pages@v4
