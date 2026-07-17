@@ -4,12 +4,9 @@ on:
     branches:
       - main
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 jobs:
   deploy:
     environment:
@@ -25,18 +22,18 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Instalar MyST Localmente
-        run: |
-          npm init -y
-          npm install mystmd
+      - name: Install MyST MD
+        run: npm install -g mystmd
 
-      - name: Construir o Site
-        run: npx myst build --site
+      - name: Build HTML Site
+        run: myst build --html
+        env:
+          BASE_URL: /${{ github.event.repository.name }}
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '_build/site'
+          path: '_build/html'
 
       - name: Deploy to GitHub Pages
         id: deployment
