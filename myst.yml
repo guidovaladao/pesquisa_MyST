@@ -1,9 +1,4 @@
 project:
   title: Minha Pesquisa
-  description: Acompanhamento em tempo real para o orientador
-  authors:
-    - name: Seu Nome
 site:
   template: book-theme
-  nav:
-    - doc: index.md
