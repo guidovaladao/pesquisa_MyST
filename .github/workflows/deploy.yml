@@ -1,0 +1,21 @@
+name: Deploy MyST Site
+on:
+  push:
+    branches:
+      - main
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup MyST
+        uses: mystmd/actions/setup@v2
+      - name: Build Site
+        run: myst build --site
+      - name: Deploy to GitHub Pages
+        uses: mystmd/actions/deploy@v2
