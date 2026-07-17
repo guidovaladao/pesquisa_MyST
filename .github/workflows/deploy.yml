@@ -19,16 +19,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '24'
-      - name: Build Site
-        run: npx mystmd build --site
+          node-version: '22'
+
+      - name: Instalar MyST Localmente
+        run: |
+          npm init -y
+          npm install mystmd
+
+      - name: Construir o Site
+        run: npx myst build --site
+
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: '_build/site'
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
