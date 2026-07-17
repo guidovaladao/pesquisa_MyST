@@ -24,9 +24,9 @@ jobs:
         with:
           node-version: '24'
       - name: Install MyST MD
-        run: npm install mystmd
+        run: sudo npm install -g mystmd
       - name: Build Site
-        run: npx myst build --site
+        run: myst build --site
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
