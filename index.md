@@ -15,4 +15,4 @@ Este é o site onde vou atualizar os resultados da pesquisa em tempo real.
 | DLA (3D) | {6..10} | ising/GISC | 🟢 Rodando |
 
 ```{note}
-Última atualização feita direto pelo GitHub em 01/02/2026
+Última atualização feita direto pelo GitHub em 01/08/2026
