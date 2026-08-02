@@ -1,0 +1,31 @@
+```yaml
+name: Atualizar Data de Commit
+
+on:
+  push:
+    branches:
+      - main  # ou 'master', dependendo do nome da sua branch principal
+
+jobs:
+  update-date:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Substituir variável pela data e hora atuais
+        run: |
+          # Obtém a data/hora no fuso horário de Brasília (BRT)
+          DATA_ATUAL=$(TZ="America/Sao_Paulo" date +"%d/%m/%Y às %H:%M")
+          
+          # Procura por {{DATA_HORA}} em todos os arquivos .md e substitui
+          find . -name "*.md" -exec sed -i "s/{{DATA_HORA}}/$DATA_ATUAL/g" {} +
+
+      - name: Commit e Push das alterações (se houver)
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -am "build: atualiza data/hora do relatório" || exit 0
+          git push
